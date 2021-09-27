@@ -20,6 +20,7 @@ function oe_theme_content_publication_theme() {
         'body' => '',
         'image' => '',
       ],
+      'template' => 'oe-theme-content-publication-description',
     ],
   ];
 }

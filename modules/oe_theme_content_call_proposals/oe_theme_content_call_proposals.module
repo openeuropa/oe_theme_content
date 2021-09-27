@@ -20,6 +20,7 @@ function oe_theme_content_call_proposals_theme() {
         'date' => '',
         'link' => [],
       ],
+      'template' => 'oe_theme_content_call_proposals_publication_info',
     ],
   ];
 }

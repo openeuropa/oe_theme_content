@@ -24,17 +24,20 @@ function oe_theme_content_event_theme() {
         'enabled' => FALSE,
         'show_button' => TRUE,
       ],
+      'template' => 'oe-theme-content-event-registration-button',
     ],
     'oe_theme_content_event_summary' => [
       'variables' => [
         'text' => '',
       ],
+      'template' => 'oe-theme-content-event-summary',
     ],
     'oe_theme_content_event_contacts' => [
       'variables' => [
         'general' => [],
         'press' => [],
       ],
+      'template' => 'oe-theme-content-event-contacts',
     ],
   ];
 }
