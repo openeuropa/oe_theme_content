@@ -21,7 +21,6 @@ function oe_theme_content_consultation_theme() {
       'variables' => [
         'text' => '',
       ],
-      'template' => 'oe-theme-content-consultation-closed-text',
     ],
   ];
 }
