@@ -10,7 +10,7 @@
     <env name="MINK_DRIVER_ARGS_WEBDRIVER" value='["${selenium.browser}", null, "${selenium.host}:${selenium.port}/wd/hub"]'/>
   </php>
   <listeners>
-    <listener class="Drupal\Tests\oe_theme\EnsurePHPUnitBatchingTestListener" file="./tests/EnsurePHPUnitBatchingTestListener.php"></listener>
+    <listener class="Drupal\Tests\oe_theme\EnsurePHPUnitBatchingTestListener" file="./build/themes/contrib/oe_theme/tests/EnsurePHPUnitBatchingTestListener.php"></listener>
   </listeners>
   <testsuites>
     <testsuite>

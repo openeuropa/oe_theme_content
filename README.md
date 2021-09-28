@@ -34,7 +34,7 @@ composer require openeuropa/oe_theme_content
 
 
 ## Companion sub-modules
-
+* [OpenEuropa Content Call for proposals companion module](./modules/oe_theme_content_call_proposals/README.md)
 * [OpenEuropa Content Call for tenders companion module](./modules/oe_theme_content_call_tenders/README.md)
 * [OpenEuropa Content Corporate Entity Contact companion module](./modules/oe_theme_content_entity_contact/README.md)
 * [OpenEuropa Content Corporate Entity Organisation companion module](./modules/oe_theme_content_entity_organisation/README.md)
