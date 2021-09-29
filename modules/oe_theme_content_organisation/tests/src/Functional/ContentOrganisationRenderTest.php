@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_theme_content\Functional;
+namespace Drupal\Tests\oe_theme_content_organisation\Functional;
 
 use Drupal\oe_content_entity\Entity\CorporateEntityInterface;
 use Drupal\node\Entity\Node;
@@ -269,7 +269,7 @@ class ContentOrganisationRenderTest extends ContentRenderTestBase {
     // Assert person content.
     $first_person_image = $person_content[0]->find('css', '.ecl-u-flex-shrink-0.ecl-u-mr-s.ecl-u-media-a-s.ecl-u-media-bg-size-contain.ecl-u-media-bg-repeat-none');
     // Assert default image.
-    $this->assertEquals('background-image:url(/build/themes/contrib/oe_theme/images/user_icon.svg)', $first_person_image->getAttribute('style'));
+    $this->assertEquals('background-image:url(/build/' . drupal_get_path('theme', 'oe_theme') . '/images/user_icon.svg)', $first_person_image->getAttribute('style'));
     // Assert role div is not printed when there are no jobs.
     $this->assertCount(0, $person_content[0]->findAll('css', '.ecl-content-item__meta.ecl-u-type-s.ecl-u-type-color-grey-75.ecl-u-mb-xs'));
     // Assert name.

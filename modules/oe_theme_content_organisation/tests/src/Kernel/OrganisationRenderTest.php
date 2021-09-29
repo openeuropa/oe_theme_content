@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_theme_content\Kernel;
+namespace Drupal\Tests\oe_theme_content_organisation\Kernel;
 
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;

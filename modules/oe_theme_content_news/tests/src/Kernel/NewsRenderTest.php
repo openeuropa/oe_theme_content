@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_theme_content\Kernel;
+namespace Drupal\Tests\oe_theme_content_news\Kernel;
 
 use Drupal\media\Entity\Media;
 use Drupal\Tests\oe_theme\Kernel\ContentRenderTestBase;

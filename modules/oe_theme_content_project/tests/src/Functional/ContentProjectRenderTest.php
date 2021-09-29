@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_theme_content\Functional;
+namespace Drupal\Tests\oe_theme_content_project\Functional;
 
 use Behat\Mink\Element\NodeElement;
 use Drupal\oe_content_entity\Entity\CorporateEntityInterface;

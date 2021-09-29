@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_theme_content\Functional;
+namespace Drupal\Tests\oe_theme_content_news\Functional;
 
 use Drupal\Tests\oe_theme\Functional\ContentRenderTestBase;
 use Drupal\Tests\oe_theme\PatternAssertions\FieldListAssert;
