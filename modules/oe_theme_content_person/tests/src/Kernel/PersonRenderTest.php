@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_theme_content\Kernel;
+namespace Drupal\Tests\oe_theme_content_person\Kernel;
 
 use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;

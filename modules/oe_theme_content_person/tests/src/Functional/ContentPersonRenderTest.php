@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\Tests\oe_theme_content\Functional;
+namespace Drupal\Tests\oe_theme_content_person\Functional;
 
 use Behat\Mink\Element\NodeElement;
 use Drupal\node\Entity\Node;
@@ -86,7 +86,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
 
     // Assert content.
     $portrait = $this->assertSession()->elementExists('css', 'article .ecl-col-lg-3 img.ecl-media-container__media');
-    $this->assertContains('/themes/contrib/oe_theme/images/user_icon.svg', $portrait->getAttribute('src'));
+    $this->assertContains(drupal_get_path('theme', 'oe_theme') . '/images/user_icon.svg', $portrait->getAttribute('src'));
     $this->assertEmpty($portrait->getAttribute('alt'));
     $this->assertSession()->pageTextNotContains('Page contents');
     $content = $this->assertSession()->elementExists('css', 'article .ecl-col-lg-9');
