@@ -70,7 +70,7 @@ class ContentCallForTendersRenderTest extends ContentRenderTestBase {
     $page_header_assert = new PatternPageHeaderAssert();
     $page_header_expected_values = [
       'title' => 'Test Call for tenders node',
-      'meta' => 'Call for tenders',
+      'meta' => ['Call for tenders'],
     ];
     $page_header_assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
@@ -87,8 +87,8 @@ class ContentCallForTendersRenderTest extends ContentRenderTestBase {
 
     // Assert content part.
     $wrapper = $this->assertSession()->elementExists('css', '.ecl-row.ecl-u-mt-l');
-    $content = $this->assertSession()->elementExists('css', '.ecl-col-lg-9', $wrapper);
-    $this->assertSession()->elementsCount('css', '.ecl-col-lg-9', 1);
+    $content = $this->assertSession()->elementExists('css', '.ecl-col-l-9', $wrapper);
+    $this->assertSession()->elementsCount('css', '.ecl-col-l-9', 1);
     $content_items = $content->findAll('xpath', '/div');
     $this->assertCount(1, $content_items);
     $this->assertContentHeader($content_items[0], 'Details', 'details');
@@ -118,7 +118,7 @@ class ContentCallForTendersRenderTest extends ContentRenderTestBase {
     $page_header_expected_values = [
       'title' => 'Test Call for tenders node',
       'description' => 'Call for tenders introduction',
-      'meta' => 'Call for tenders',
+      'meta' => ['Call for tenders'],
     ];
     $page_header_assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
@@ -127,7 +127,10 @@ class ContentCallForTendersRenderTest extends ContentRenderTestBase {
     $node->set('oe_call_tenders_opening_date', ['value' => $opening_date->format('Y-m-d')])->save();
     $this->drupalGet($node->toUrl());
 
-    $page_header_expected_values['meta'] = 'Call for tenders | Upcoming';
+    $page_header_expected_values['meta'] = [
+      'Call for tenders',
+      'Upcoming',
+    ];
     $page_header_assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
     $details_expected_values['items'] = [
@@ -154,7 +157,10 @@ class ContentCallForTendersRenderTest extends ContentRenderTestBase {
     $this->cronRun();
     $this->drupalGet($node->toUrl());
 
-    $page_header_expected_values['meta'] = 'Call for tenders | Open';
+    $page_header_expected_values['meta'] = [
+      'Call for tenders',
+      'Open',
+    ];
     $page_header_assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
     $details_expected_values['items'] = [
@@ -181,7 +187,10 @@ class ContentCallForTendersRenderTest extends ContentRenderTestBase {
     $this->cronRun();
     $this->drupalGet($node->toUrl());
 
-    $page_header_expected_values['meta'] = 'Call for tenders | Closed';
+    $page_header_expected_values['meta'] = [
+      'Call for tenders',
+      'Closed',
+    ];
     $page_header_assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
     $details_expected_values['items'] = [
@@ -263,7 +272,7 @@ class ContentCallForTendersRenderTest extends ContentRenderTestBase {
     $content_items = $content->findAll('xpath', '/div');
     $this->assertCount(2, $content_items);
     $this->assertContentHeader($content_items[1], 'Description', 'description');
-    $content_second_group = $content_items[1]->find('css', '.ecl-editor p');
+    $content_second_group = $content_items[1]->find('css', '.ecl p');
     $this->assertEquals('Call for tenders body', $content_second_group->getText());
 
     // Assert Documents field.
