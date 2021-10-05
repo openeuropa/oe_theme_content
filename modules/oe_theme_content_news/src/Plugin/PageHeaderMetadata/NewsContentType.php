@@ -122,7 +122,18 @@ class NewsContentType extends NodeViewRoutesBase {
 
     // Add news authors to page metadata.
     if (!$node->get('oe_author')->isEmpty()) {
-      $metadata['metas'][] = $this->getCommaSeparatedReferencedEntityLabels($this->entityRepository, $node->get('oe_author'));
+      $field_view = $this->entityTypeManager->getViewBuilder('node')
+        ->viewField($node->get('oe_authors'), [
+          'type' => 'oe_content_authors_reference_formatter',
+          'label' => 'hidden',
+          'settings' => [
+            'label_only' => TRUE,
+          ],
+        ]);
+      // Use 'fake' view mode similar as used in core '_custom'
+      // (\Drupal\Core\Entity\EntityDisplayBase::CUSTOM_MODE).
+      $field_view['#view_mode'] = 'comma_separated';
+      $metadata['metas'][] = $field_view;
     }
 
     return $metadata;

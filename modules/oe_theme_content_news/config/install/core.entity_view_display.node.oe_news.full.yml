@@ -5,6 +5,7 @@ dependencies:
     - core.entity_view_mode.node.full
     - field.field.node.oe_news.body
     - field.field.node.oe_news.oe_author
+    - field.field.node.oe_news.oe_authors
     - field.field.node.oe_news.oe_departments
     - field.field.node.oe_news.oe_news_contacts
     - field.field.node.oe_news.oe_news_featured_media
@@ -23,6 +24,7 @@ dependencies:
     - entity_reference_revisions
     - field_group
     - link
+    - oe_content
     - rdf_skos
     - text
     - user
@@ -32,11 +34,11 @@ third_party_settings:
       children:
         - oe_reference_code
         - extra_field_oe_theme_content_news_date
-        - oe_author
+        - oe_authors
         - oe_departments
         - oe_news_location
       parent_name: ''
-      weight: 3
+      weight: 2
       format_type: oe_theme_helper_field_list_pattern
       region: content
       format_settings:
@@ -59,13 +61,15 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  oe_author:
-    type: skos_concept_entity_reference_label
+  oe_authors:
+    type: oe_content_authors_reference_formatter
     weight: 14
     region: content
     label: above
     settings:
-      link: false
+      label_only: true
+      rel: ''
+      target: ''
     third_party_settings: {  }
   oe_departments:
     type: skos_concept_entity_reference_label
@@ -128,6 +132,7 @@ hidden:
   extra_field_oe_theme_helper_short_title_with_fallback: true
   langcode: true
   links: true
+  oe_author: true
   oe_content_content_owner: true
   oe_content_legacy_link: true
   oe_content_navigation_title: true

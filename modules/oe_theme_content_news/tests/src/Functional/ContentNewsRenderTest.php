@@ -45,6 +45,15 @@ class ContentNewsRenderTest extends ContentRenderTestBase {
    * Tests that the News page renders correctly.
    */
   public function testNewsRendering(): void {
+
+    $author = $this->getStorage('oe_author')->create([
+      'type' => 'oe_corporate_body',
+      'oe_skos_reference' => [
+        'http://publications.europa.eu/resource/authority/corporate-body/ACJHR',
+      ],
+    ]);
+    $author->save();
+
     // Create a News node.
     /** @var \Drupal\node\Entity\Node $node */
     $node = $this->getStorage('node')->create([
@@ -58,8 +67,8 @@ class ContentNewsRenderTest extends ContentRenderTestBase {
       'oe_publication_date' => [
         'value' => '2020-09-18',
       ],
-      'oe_author' => 'http://publications.europa.eu/resource/authority/corporate-body/ACJHR',
       'oe_departments' => 'http://publications.europa.eu/resource/authority/corporate-body/AASM',
+      'oe_authors' => [$author],
       'oe_content_content_owner' => 'http://publications.europa.eu/resource/authority/corporate-body/COMMU',
       'uid' => 0,
       'status' => 1,
