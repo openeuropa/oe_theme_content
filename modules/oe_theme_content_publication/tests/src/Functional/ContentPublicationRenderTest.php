@@ -72,6 +72,14 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
     // Create a document for Publication.
     $media_document = $this->createMediaDocument('publication_document');
 
+    $author = $this->getStorage('oe_author')->create([
+      'type' => 'oe_corporate_body',
+      'oe_skos_reference' => [
+        'http://publications.europa.eu/resource/authority/corporate-body/AASM',
+      ],
+    ]);
+    $author->save();
+
     // Create a Publication node with required fields only.
     /** @var \Drupal\node\Entity\Node $node */
     $node = $this->getStorage('node')->create([
@@ -85,7 +93,7 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         'value' => '2020-04-15',
       ],
       'oe_subject' => 'http://data.europa.eu/uxp/1000',
-      'oe_author' => 'http://publications.europa.eu/resource/authority/corporate-body/AASM',
+      'oe_authors' => [$author],
       'oe_content_content_owner' => 'http://publications.europa.eu/resource/authority/corporate-body/COMMU',
       'uid' => 0,
       'status' => 1,
@@ -381,6 +389,14 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
     $content_items = $content->findAll('xpath', '/div');
     $this->assertCount(3, $content_items);
 
+    $author = $this->getStorage('oe_author')->create([
+      'type' => 'oe_corporate_body',
+      'oe_skos_reference' => [
+        'http://publications.europa.eu/resource/authority/corporate-body/AASM',
+      ],
+    ]);
+    $author->save();
+
     // Create publication collections that will reference the original
     // publication.
     $collection = $this->getStorage('node')->create([
@@ -395,7 +411,7 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         'value' => '2020-04-15',
       ],
       'oe_subject' => 'http://data.europa.eu/uxp/1000',
-      'oe_author' => 'http://publications.europa.eu/resource/authority/corporate-body/AASM',
+      'oe_authors' => [$author],
       'oe_content_content_owner' => 'http://publications.europa.eu/resource/authority/corporate-body/COMMU',
       'uid' => 0,
       'status' => 1,
@@ -447,6 +463,14 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
 
     // Create a second collection and assert the 'Part of collection' extra
     // field on the child publication page.
+    $author = $this->getStorage('oe_author')->create([
+      'type' => 'oe_corporate_body',
+      'oe_skos_reference' => [
+        'http://publications.europa.eu/resource/authority/corporate-body/AASM',
+      ],
+    ]);
+    $author->save();
+
     $collection2 = $this->getStorage('node')->create([
       'type' => 'oe_publication',
       'title' => 'Test Publication collection node 2',
@@ -459,7 +483,7 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         'value' => '2020-04-15',
       ],
       'oe_subject' => 'http://data.europa.eu/uxp/1000',
-      'oe_author' => 'http://publications.europa.eu/resource/authority/corporate-body/AASM',
+      'oe_authors' => [$author],
       'oe_content_content_owner' => 'http://publications.europa.eu/resource/authority/corporate-body/COMMU',
       'uid' => 0,
       'status' => 1,

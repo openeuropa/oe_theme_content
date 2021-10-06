@@ -121,7 +121,7 @@ class NewsContentType extends NodeViewRoutesBase {
     }
 
     // Add news authors to page metadata.
-    if (!$node->get('oe_author')->isEmpty()) {
+    if (!$node->get('oe_authors')->isEmpty()) {
       $field_view = $this->entityTypeManager->getViewBuilder('node')
         ->viewField($node->get('oe_authors'), [
           'type' => 'oe_content_authors_reference_formatter',

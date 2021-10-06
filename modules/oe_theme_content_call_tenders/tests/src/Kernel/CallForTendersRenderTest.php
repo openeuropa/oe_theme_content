@@ -38,6 +38,7 @@ class CallForTendersRenderTest extends ContentRenderTestBase {
     'datetime_testing',
     'file_link',
     'options',
+    'oe_content_sub_entity',
   ];
 
   /**

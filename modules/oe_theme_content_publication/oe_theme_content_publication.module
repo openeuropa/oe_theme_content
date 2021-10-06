@@ -44,6 +44,10 @@ function oe_theme_content_publication_node_view_alter(array &$build, EntityInter
       'oe_reference_codes' => t('Identification'),
     ];
 
+    if ($entity->get('oe_authors')->count() === 1 && count($entity->get('oe_authors')->first()->entity->getAuthorsAsLinks()) === 1) {
+      $label_overrides['oe_authors'] = t('Author');
+    }
+
     if ($entity->get('oe_departments')->count() > 1) {
       $label_overrides['oe_departments'] = t('Related departments');
     }

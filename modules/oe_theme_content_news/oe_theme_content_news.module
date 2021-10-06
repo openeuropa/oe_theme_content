@@ -56,7 +56,6 @@ function oe_theme_content_news_node_view_alter(array &$build, EntityInterface $e
   if ($build['#view_mode'] === 'full') {
     // Rename field labels based on number of items.
     $plural_label_overrides = [
-      'oe_author' => t('Authors'),
       'oe_departments' => t('Departments'),
     ];
 
@@ -72,6 +71,10 @@ function oe_theme_content_news_node_view_alter(array &$build, EntityInterface $e
       elseif (!$entity->get($name)->isEmpty() && $entity->get($name)->count() == 1 && isset($build[$name]['#title']) && isset($singular_label_overrides[$name])) {
         $build[$name]['#title'] = $singular_label_overrides[$name];
       }
+    }
+
+    if ($entity->get('oe_authors')->count() === 1 && count($entity->get('oe_authors')->first()->entity->getAuthorsAsLinks()) === 1) {
+      $build['oe_authors']['#title'] = t('Author');
     }
   }
 }

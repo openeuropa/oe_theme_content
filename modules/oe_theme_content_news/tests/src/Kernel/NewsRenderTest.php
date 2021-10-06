@@ -16,6 +16,13 @@ use Drupal\Tests\user\Traits\UserCreationTrait;
  */
 class NewsRenderTest extends ContentRenderTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
+  public static $modules = [
+    'oe_content_sub_entity',
+  ];
+
   use UserCreationTrait;
 
   /**
@@ -59,7 +66,6 @@ class NewsRenderTest extends ContentRenderTestBase {
       ],
       'oe_publication_date' => '2019-04-02',
       'oe_subject' => 'http://data.europa.eu/uxp/1000',
-      'oe_author' => 'http://publications.europa.eu/resource/authority/corporate-body/COMMU',
       'oe_content_content_owner' => 'http://publications.europa.eu/resource/authority/corporate-body/COMMU',
       'status' => 1,
     ]);

@@ -44,6 +44,7 @@ class OrganisationRenderTest extends ContentRenderTestBase {
     'oe_theme_content_entity_contact',
     'oe_theme_content_organisation',
     'description_list_field',
+    'oe_content_sub_entity',
   ];
 
   /**

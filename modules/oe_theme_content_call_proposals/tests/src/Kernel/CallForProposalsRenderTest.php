@@ -36,6 +36,7 @@ class CallForProposalsRenderTest extends ContentRenderTestBase {
     'oe_content_call_proposals',
     'oe_theme_content_call_proposals',
     'datetime_testing',
+    'oe_content_sub_entity',
   ];
 
   /**

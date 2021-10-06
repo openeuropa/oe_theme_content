@@ -28,6 +28,7 @@ class ContentNewsRenderTest extends ContentRenderTestBase {
     'oe_theme_content_news',
     'oe_theme_content_entity_contact',
     'block',
+    'oe_content_sub_entity_extra_authors',
   ];
 
   /**
@@ -45,7 +46,6 @@ class ContentNewsRenderTest extends ContentRenderTestBase {
    * Tests that the News page renders correctly.
    */
   public function testNewsRendering(): void {
-
     $author = $this->getStorage('oe_author')->create([
       'type' => 'oe_corporate_body',
       'oe_skos_reference' => [
@@ -163,15 +163,74 @@ class ContentNewsRenderTest extends ContentRenderTestBase {
     $details_html = $details->getHtml();
     $field_list_assert->assertPattern($details_expected_values, $details_html);
 
-    // Assert Author field label.
-    $node->set('oe_author', [
-      ['target_id' => 'http://publications.europa.eu/resource/authority/corporate-body/ACJHR'],
-      ['target_id' => 'http://publications.europa.eu/resource/authority/corporate-body/ACP_CDE'],
+    // Add Person author.
+    $person_node = $this->createNode([
+      'type' => 'oe_person',
+      'oe_person_first_name' => 'John',
+      'oe_person_last_name' => 'Doe',
+    ]);
+    $person_node->save();
+    $person_author = $this->getStorage('oe_author')->create([
+      'type' => 'oe_person',
+      'oe_node_reference' => [
+        $person_node->id(),
+      ],
+    ]);
+    $person_author->save();
+    // Add Organisation author.
+    $org_node = $this->createNode([
+      'type' => 'oe_organisation',
+      'title' => 'Org1',
+    ]);
+    $org_node->save();
+    $org_author = $this->getStorage('oe_author')->create([
+      'type' => 'oe_organisation',
+      'oe_node_reference' => [
+        $org_node->id(),
+
+      ],
+    ]);
+    $org_author->save();
+    // Assert Authors field label.
+    $author2 = $this->getStorage('oe_author')->create([
+      'type' => 'oe_corporate_body',
+      'oe_skos_reference' => [
+        'http://publications.europa.eu/resource/authority/corporate-body/ACP_CDE',
+      ],
+    ]);
+    $author2->save();
+
+    // Add Link author.
+    $links_author = $this->getStorage('oe_author')->create([
+      'type' => 'oe_link',
+      'oe_link' => [
+        [
+          'uri' => 'internal:/node/add',
+          'title' => 'node add internal',
+        ],
+        [
+          'uri' => 'entity:node/' . $person_node->id(),
+          'title' => 'Link to John Doe person',
+        ],
+        [
+          'uri' => 'http://example.com',
+          'title' => 'external link',
+        ],
+      ],
+    ]);
+    $links_author->save();
+
+    $node->set('oe_authors', [
+      $author,
+      $author2,
+      $person_author,
+      $org_author,
+      $links_author,
     ]);
     $node->save();
     $this->drupalGet($node->toUrl());
     $details_expected_values['items'][2]['label'] = 'Authors';
-    $details_expected_values['items'][2]['body'] = 'African Court of Justice and Human Rights | Centre for the Development of Enterprise';
+    $details_expected_values['items'][2]['body'] = 'African Court of Justice and Human Rights | Centre for the Development of Enterprise | John Doe | Org1 | node add internal | Link to John Doe person | external link';
     $details_html = $details->getHtml();
     $field_list_assert->assertPattern($details_expected_values, $details_html);
 
