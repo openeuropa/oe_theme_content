@@ -151,3 +151,19 @@ function oe_theme_content_news_post_update_00009(): void {
   $display = $storage->createFromStorageRecord($display_values);
   $display->save();
 }
+
+/**
+ * Updates the full view display to update output of new Author field.
+ */
+function oe_theme_content_news_post_update_30001(): void {
+  $file_storage = new FileStorage(drupal_get_path('module', 'oe_theme_content_news') . '/config/post_updates/30001_update_full_view_display');
+
+  $display_values = $file_storage->read('core.entity_view_display.node.oe_news.full');
+  $storage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
+
+  $view_display = EntityViewDisplay::load($display_values['id']);
+  if ($view_display) {
+    $display = $storage->updateFromStorageRecord($view_display, $display_values);
+    $display->save();
+  }
+}

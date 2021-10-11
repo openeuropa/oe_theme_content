@@ -222,3 +222,25 @@ function oe_theme_content_publication_post_update_30001(): void {
     $display->save();
   }
 }
+
+/**
+ * Updates the full view display.
+ */
+function oe_theme_content_publication_post_update_30002(): void {
+  $file_storage = new FileStorage(drupal_get_path('module', 'oe_theme_content_publication') . '/config/post_updates/30002_publication_author_field');
+
+  $view_display_configs = [
+    'core.entity_view_display.node.oe_publication.full',
+    'core.entity_view_display.node.oe_publication.teaser',
+  ];
+  foreach ($view_display_configs as $config) {
+    $display_values = $file_storage->read($config);
+    $storage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
+
+    $view_display = EntityViewDisplay::load($display_values['id']);
+    if ($view_display) {
+      $display = $storage->updateFromStorageRecord($view_display, $display_values);
+      $display->save();
+    }
+  }
+}
