@@ -79,17 +79,17 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $page_header = $this->assertSession()->elementExists('css', '.ecl-page-header-core');
     $assert = new PatternPageHeaderAssert();
     $page_header_expected_values = [
-      'meta' => NULL,
+      'meta' => [],
       'title' => 'Mick Jagger',
     ];
     $assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
     // Assert content.
-    $portrait = $this->assertSession()->elementExists('css', 'article .ecl-col-lg-3 img.ecl-media-container__media');
+    $portrait = $this->assertSession()->elementExists('css', 'article .ecl-col-l-3 img.ecl-media-container__media');
     $this->assertContains(drupal_get_path('theme', 'oe_theme') . '/images/user_icon.svg', $portrait->getAttribute('src'));
     $this->assertEmpty($portrait->getAttribute('alt'));
     $this->assertSession()->pageTextNotContains('Page contents');
-    $content = $this->assertSession()->elementExists('css', 'article .ecl-col-lg-9');
+    $content = $this->assertSession()->elementExists('css', 'article .ecl-col-l-9');
     $this->assertEmpty($content->getText());
 
     // Assert Display name field.
@@ -221,7 +221,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $node->set('oe_person_jobs', $job_1)->save();
     $this->drupalGet($node->toUrl());
 
-    $page_header_expected_values['meta'] = '(Acting) Advisor';
+    $page_header_expected_values['meta'] = ['(Acting) Advisor'];
     $assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
     $inpage_nav_expected_values['list'][] = [
@@ -235,7 +235,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $this->assertContentHeader($content_items[2], 'Responsibilities', 'responsibilities');
     $job_role_content = $content_items[2]->find('css', 'h3.ecl-u-type-heading-3.ecl-u-mt-none.ecl-u-mb-s');
     $this->assertEquals('(Acting) Advisor', $job_role_content->getText());
-    $job_description_content = $content_items[2]->find('css', 'div.ecl-u-mb-l.ecl-editor');
+    $job_description_content = $content_items[2]->find('css', 'div.ecl-u-mb-l.ecl');
     $this->assertEquals('Description job_1', $job_description_content->getText());
 
     // Assert Jobs field with multiple values.
@@ -243,13 +243,13 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $node->set('oe_person_jobs', [$job_1, $job_2])->save();
     $this->drupalGet($node->toUrl());
 
-    $page_header_expected_values['meta'] = '(Acting) Advisor, Chief advisor';
+    $page_header_expected_values['meta'] = ['(Acting) Advisor, Chief advisor'];
     $assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
     $content_items = $content->findAll('xpath', '/div');
     $job_role_items = $content_items[2]->findAll('css', 'h3.ecl-u-type-heading-3.ecl-u-mt-none.ecl-u-mb-s');
     $this->assertEquals('Chief advisor', $job_role_items[1]->getText());
-    $job_description_items = $content_items[2]->findAll('css', 'div.ecl-u-mb-l.ecl-editor');
+    $job_description_items = $content_items[2]->findAll('css', 'div.ecl-u-mb-l.ecl');
     $this->assertEquals('Description job_2', $job_description_items[1]->getText());
 
     // Assert Social media links field.
@@ -329,7 +329,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $content_items = $content->findAll('xpath', '/div');
     $this->assertCount(6, $content_items);
     $this->assertContentHeader($content_items[5], 'Transparency', 'transparency');
-    $transparancy_intro_content = $content_items[5]->find('css', 'div.ecl-editor.ecl-u-mb-m');
+    $transparancy_intro_content = $content_items[5]->find('css', 'div.ecl.ecl-u-mb-m');
     $this->assertEquals('Transparency introduction text', $transparancy_intro_content->getText());
 
     // Assert Transparency links field.
@@ -364,7 +364,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $content_items = $content->findAll('xpath', '/div');
     $this->assertCount(7, $content_items);
     $this->assertContentHeader($content_items[6], 'Biography', 'biography');
-    $biography_content = $content_items[6]->find('css', 'div.ecl-editor.ecl-u-mb-m');
+    $biography_content = $content_items[6]->find('css', 'div.ecl.ecl-u-mb-m');
     $this->assertEquals('Biography introduction text', $biography_content->getText());
 
     // Assert Biography field.
@@ -391,7 +391,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $this->drupalGet($node->toUrl());
 
     $content_items = $content->findAll('xpath', '/div');
-    $biography_items = $content_items[6]->findAll('css', 'ol.ecl-timeline2 li.ecl-timeline2__item');
+    $biography_items = $content_items[6]->findAll('css', 'ol.ecl-timeline li.ecl-timeline__item');
     $this->assertCount(6, $biography_items);
     $this->assertTimelineItem($biography_items[0], 'Timeline label 1', 'Timeline title 1', 'Timeline body 1');
     $this->assertTimelineItem($biography_items[1], 'Timeline label 2', 'Timeline title 2', '');
@@ -414,7 +414,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
 
     $content_items = $content->findAll('xpath', '/div');
     $this->assertEquals('Declaration of interests', $content_items[6]->find('css', 'h3.ecl-u-type-heading-3')->getText());
-    $this->assertEquals('Declaration of interests introduction text', $content_items[6]->find('css', 'div.ecl-u-mb-l.ecl-editor')->getText());
+    $this->assertEquals('Declaration of interests introduction text', $content_items[6]->find('css', 'div.ecl-u-mb-l.ecl')->getText());
 
     // Assert Declaration of interests file field.
     $cv_media_document = $this->createMediaDocument('declaration');
@@ -443,7 +443,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $content_items = $content->findAll('xpath', '/div');
     $this->assertCount(8, $content_items);
     $this->assertMediaDocumentDefaultRender($content_items[7], 'document_reference', 'English', '2.96 KB - PDF', "sample_document_reference.pdf", 'Download');
-    $publication_teaser_content = $content_items[7]->find('css', 'div.ecl-u-border-bottom.ecl-u-border-color-grey-15 article.ecl-content-item.ecl-u-d-sm-flex.ecl-u-pb-m');
+    $publication_teaser_content = $content_items[7]->find('css', 'div.ecl-u-border-bottom.ecl-u-border-color-grey-15 article.ecl-content-item.ecl-u-d-s-flex.ecl-u-pb-m');
     $publication_teaser_assert = new ListItemAssert();
     $publication_teaser_expected_values = [
       'title' => 'publication_reference',
@@ -502,7 +502,7 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
     $job_role_items = $content_items[2]->findAll('css', 'h3.ecl-u-type-heading-3.ecl-u-mt-none.ecl-u-mb-s');
     $this->assertEquals('Singer', $job_role_items[0]->getText());
     $this->assertEquals('Dancer', $job_role_items[1]->getText());
-    $job_description_items = $content_items[2]->findAll('css', 'div.ecl-u-mb-l.ecl-editor');
+    $job_description_items = $content_items[2]->findAll('css', 'div.ecl-u-mb-l.ecl');
     $this->assertEquals('Description job_1', $job_description_items[0]->getText());
     $this->assertEquals('Description job_2', $job_description_items[1]->getText());
 
@@ -601,9 +601,9 @@ class ContentPersonRenderTest extends ContentRenderTestBase {
    *   Expected body.
    */
   protected function assertTimelineItem(NodeElement $element, string $label, string $title, string $body):void {
-    $this->assertEquals($label, $element->find('css', '.ecl-timeline2__label')->getText());
-    $this->assertEquals($title, $element->find('css', '.ecl-timeline2__title')->getText());
-    $this->assertEquals($body, $element->find('css', '.ecl-timeline2__content')->getText());
+    $this->assertEquals($label, $element->find('css', '.ecl-timeline__label')->getText());
+    $this->assertEquals($title, $element->find('css', '.ecl-timeline__title')->getText());
+    $this->assertEquals($body, $element->find('css', '.ecl-timeline__content')->getText());
   }
 
 }

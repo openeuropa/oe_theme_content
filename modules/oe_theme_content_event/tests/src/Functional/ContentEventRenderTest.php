@@ -182,7 +182,7 @@ class ContentEventRenderTest extends ContentRenderTestBase {
     $page_header_assert = new PatternPageHeaderAssert();
     $page_header_expected_values = [
       'title' => 'Test event node',
-      'meta' => 'Competitions and award ceremonies',
+      'meta' => ['Competitions and award ceremonies'],
     ];
     $page_header_assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
 
@@ -193,7 +193,7 @@ class ContentEventRenderTest extends ContentRenderTestBase {
     // Assert details.
     $details_content = $this->assertSession()->elementExists('css', '#event-details');
     $this->assertSession()->elementNotExists('css', '.ecl-body', $details_content);
-    $details_list_content = $this->assertSession()->elementExists('css', '.ecl-col-12.ecl-col-md-6.ecl-u-mt-l.ecl-u-mt-md-none ul.ecl-unordered-list.ecl-unordered-list--no-bullet', $details_content);
+    $details_list_content = $this->assertSession()->elementExists('css', '.ecl-col-12.ecl-col-m-6.ecl-u-mt-l.ecl-u-mt-m-none ul.ecl-unordered-list.ecl-unordered-list--no-bullet', $details_content);
     $icons_text_assert = new IconsTextAssert();
     $icons_text_expected_values = [
       'items' => [
@@ -427,10 +427,8 @@ class ContentEventRenderTest extends ContentRenderTestBase {
     $this->assertSession()->pageTextNotContains('Event report summary');
     $this->assertSession()->pageTextNotContains('Event report text');
 
-    // Assert "Description summary", "Full text", "Featured media",
-    // "Featured media legend" fields (these fields have to be filled all
-    // together).
-    $node->set('oe_event_description_summary', 'Event description summary');
+    // Assert "Full text", "Featured media", "Featured media legend" fields
+    // (these fields have to be filled all together).
     $node->set('body', 'Event full text');
     $node->set('oe_event_featured_media_legend', 'Event featured media legend');
     $media_image = $this->createMediaImage('event_featured_media');
@@ -449,6 +447,11 @@ class ContentEventRenderTest extends ContentRenderTestBase {
       ],
     ];
     $text_featured->assertPattern($text_featured_expected_values, $description_content->getHtml());
+
+    // Assert "Description summary" field value.
+    $node->set('oe_event_description_summary', 'Event description summary')->save();
+    $this->drupalGet($node->toUrl());
+    $this->assertSession()->pageTextContains('Event description summary');
 
     // Assert "Registration date" field when registration will start in future.
     $registration_start_date = (clone $static_time)->modify('+ 1 day');
@@ -508,7 +511,7 @@ class ContentEventRenderTest extends ContentRenderTestBase {
     $this->cronRun();
     $this->drupalGet($node->toUrl());
 
-    $description_summary = $this->assertSession()->elementExists('css', '.ecl-editor', $details_content);
+    $description_summary = $this->assertSession()->elementExists('css', '.ecl', $details_content);
     $this->assertEquals('Event report summary', $description_summary->getText());
 
     $text_featured_expected_values['title'] = 'Report';
@@ -517,7 +520,7 @@ class ContentEventRenderTest extends ContentRenderTestBase {
 
     $this->assertSession()->pageTextNotContains('Event description summary');
     $this->assertSession()->pageTextNotContains('Event full text');
-    $this->assertSession()->pageTextNotContains('<h2 class="ecl-u-type-heading-2 ecl-u-mt-2xl ecl-u-mt-md-3xl ecl-u-mb-l">Description</h2>');
+    $this->assertSession()->pageTextNotContains('<h2 class="ecl-u-type-heading-2 ecl-u-mt-2xl ecl-u-mt-m-3xl ecl-u-mb-l">Description</h2>');
     $this->assertSession()->elementNotExists('css', '#event-registration-block');
 
     // Assert "Event contact" field.
@@ -530,7 +533,7 @@ class ContentEventRenderTest extends ContentRenderTestBase {
     $this->drupalGet($node->toUrl());
 
     $event_contacts_content = $this->assertSession()->elementExists('css', '#event-contacts');
-    $event_contacts_header = $this->assertSession()->elementExists('css', 'h2.ecl-u-type-heading-2.ecl-u-type-color-black.ecl-u-mt-2xl.ecl-u-mt-md-3xl.ecl-u-mb-l', $event_contacts_content);
+    $event_contacts_header = $this->assertSession()->elementExists('css', 'h2.ecl-u-type-heading-2.ecl-u-type-color-black.ecl-u-mt-2xl.ecl-u-mt-m-3xl.ecl-u-mb-l', $event_contacts_content);
     $this->assertEquals('Contacts', $event_contacts_header->getText());
 
     $general_contacts_content = $this->assertSession()->elementExists('css', '#event-contacts-general', $event_contacts_content);
@@ -605,6 +608,16 @@ class ContentEventRenderTest extends ContentRenderTestBase {
       ],
     ];
     $icons_text_assert->assertPattern($icons_text_expected_values, $details_list_content->getOuterHtml());
+
+    // Verify that the event renders correctly when a non-existing event type
+    // is set.
+    $node->set('oe_event_type', 'http://publications.europa.eu/resource/authority/public-event-type/OP_DATPRO')
+      ->save();
+    $this->drupalGet($node->toUrl());
+    $page_header_expected_values = [
+      'title' => 'Test event node',
+    ];
+    $page_header_assert->assertPattern($page_header_expected_values, $page_header->getOuterHtml());
   }
 
   /**
@@ -646,7 +659,7 @@ class ContentEventRenderTest extends ContentRenderTestBase {
    *   Expected title.
    */
   protected function assertContactHeader(NodeElement $rendered_element, string $title): void {
-    $rendered_header = $this->assertSession()->elementExists('css', 'h3.ecl-u-type-heading-3.ecl-u-type-color-black.ecl-u-mt-none.ecl-u-mb-m.ecl-u-mb-md-l', $rendered_element);
+    $rendered_header = $this->assertSession()->elementExists('css', 'h3.ecl-u-type-heading-3.ecl-u-type-color-black.ecl-u-mt-none.ecl-u-mb-m.ecl-u-mb-m-l', $rendered_element);
     $this->assertEquals($title, $rendered_header->getText());
   }
 

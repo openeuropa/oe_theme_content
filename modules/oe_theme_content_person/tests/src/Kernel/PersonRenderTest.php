@@ -34,6 +34,7 @@ class PersonRenderTest extends ContentRenderTestBase {
     'options',
     'field_group',
     'composite_reference',
+    'description_list_field',
     'oe_content_departments_field',
     'oe_content_person',
     'oe_content_organisation',
@@ -192,7 +193,7 @@ class PersonRenderTest extends ContentRenderTestBase {
           'body' => 'Office direct_contact',
         ], [
           'label' => 'Social media links',
-          'body' => ' Social media direct_contact',
+          'body' => 'Social media direct_contact',
         ],
       ],
     ]);
@@ -234,7 +235,7 @@ class PersonRenderTest extends ContentRenderTestBase {
           'body' => 'Office organisation_reference_contact',
         ], [
           'label' => 'Social media links',
-          'body' => ' Social media organisation_reference_contact',
+          'body' => 'Social media organisation_reference_contact',
         ],
       ],
     ];
@@ -324,7 +325,7 @@ class PersonRenderTest extends ContentRenderTestBase {
               'body' => 'Office direct_contact',
             ], [
               'label' => 'Social media links',
-              'body' => ' Social media direct_contact',
+              'body' => 'Social media direct_contact',
             ],
           ],
         ]),
