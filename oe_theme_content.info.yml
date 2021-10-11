@@ -1,0 +1,5 @@
+name: OpenEuropa Theme Content
+type: module
+description: Package of modules which contains companion modules for OpenEuropa theme
+package: OpenEuropa
+core: 8.x
