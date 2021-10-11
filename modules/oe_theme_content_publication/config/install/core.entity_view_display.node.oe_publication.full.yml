@@ -5,6 +5,7 @@ dependencies:
     - core.entity_view_mode.node.full
     - field.field.node.oe_publication.body
     - field.field.node.oe_publication.oe_author
+    - field.field.node.oe_publication.oe_authors
     - field.field.node.oe_publication.oe_departments
     - field.field.node.oe_publication.oe_documents
     - field.field.node.oe_publication.oe_publication_collection
@@ -23,6 +24,7 @@ dependencies:
   module:
     - entity_reference_revisions
     - field_group
+    - oe_content
     - rdf_skos
     - user
 third_party_settings:
@@ -91,6 +93,7 @@ third_party_settings:
         - oe_reference_codes
         - extra_field_oe_theme_content_publication_collection
         - extra_field_oe_theme_content_publication_date
+        - oe_authors
         - oe_departments
         - oe_publication_countries
       parent_name: group_item_details
@@ -122,9 +125,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  oe_authors:
+    type: oe_content_authors_reference_formatter
+    weight: 3
+    region: content
+    label: above
+    settings:
+      label_only: true
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
   oe_departments:
     type: skos_concept_entity_reference_label
-    weight: 3
+    weight: 4
     region: content
     label: above
     settings:
@@ -150,7 +163,7 @@ content:
     third_party_settings: {  }
   oe_publication_countries:
     type: skos_concept_entity_reference_label
-    weight: 4
+    weight: 5
     region: content
     label: above
     settings:

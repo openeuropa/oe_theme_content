@@ -139,6 +139,10 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
           'label' => 'Publication date',
           'body' => '15 April 2020',
         ],
+        [
+          'label' => 'Author',
+          'body' => 'Associated African States and Madagascar',
+        ],
       ],
     ];
     $details_html = $content_items[0]->getHtml();
@@ -178,6 +182,9 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         ], [
           'label' => 'Publication date',
           'body' => '15 April 2020',
+        ], [
+          'label' => 'Author',
+          'body' => 'Associated African States and Madagascar',
         ],
       ],
     ];
@@ -195,6 +202,9 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         ], [
           'label' => 'Publication date',
           'body' => '15 April 2020',
+        ], [
+          'label' => 'Author',
+          'body' => 'Associated African States and Madagascar',
         ],
       ],
     ];
@@ -212,6 +222,9 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         ], [
           'label' => 'Publication date',
           'body' => '15 April 2020 (Last updated on: 17 June 2020)',
+        ], [
+          'label' => 'Author',
+          'body' => 'Associated African States and Madagascar',
         ],
       ],
     ];
@@ -235,7 +248,7 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
     ])->save();
     $this->drupalGet($node->toUrl());
 
-    $details_expected_values['items'][2] = [
+    $details_expected_values['items'][3] = [
       'label' => 'Related departments',
       'body' => 'Audit Board of the European Communities | Associated African States and Madagascar',
     ];
@@ -259,7 +272,7 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
     ])->save();
     $this->drupalGet($node->toUrl());
 
-    $details_expected_values['items'][3] = [
+    $details_expected_values['items'][4] = [
       'label' => 'Countries',
       'body' => 'United Kingdom, France',
     ];
@@ -451,6 +464,10 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         'body' => '15 April 2020 (Last updated on: 17 June 2020)',
       ],
       [
+        'label' => 'Author',
+        'body' => 'Associated African States and Madagascar',
+      ],
+      [
         'label' => 'Related departments',
         'body' => 'Audit Board of the European Communities | Associated African States and Madagascar',
       ],
@@ -506,8 +523,9 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
       'label' => 'Part of collections',
       'body' => 'Test Publication collection node 1 | ES Test Publication collection node 2',
     ];
-    $details_expected_values['items'][3]['body'] = 'Comisión de Control de las Comunidades Europeas | Estados africanos y malgache asociados';
-    $details_expected_values['items'][4]['body'] = 'Reino Unido, Francia';
+    $details_expected_values['items'][3]['body'] = 'Estados africanos y malgache asociados';
+    $details_expected_values['items'][4]['body'] = 'Comisión de Control de las Comunidades Europeas | Estados africanos y malgache asociados';
+    $details_expected_values['items'][5]['body'] = 'Reino Unido, Francia';
     $field_list_assert->assertPattern($details_expected_values, $content_items[0]->getHtml());
 
     // Now unpublish one of the collections and assert the 'Part of collection'.
