@@ -187,7 +187,6 @@ class ContentNewsRenderTest extends ContentRenderTestBase {
       'type' => 'oe_organisation',
       'oe_node_reference' => [
         $org_node->id(),
-
       ],
     ]);
     $org_author->save();

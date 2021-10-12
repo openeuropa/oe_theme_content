@@ -233,9 +233,9 @@ function oe_theme_content_publication_post_update_30002(): void {
     'core.entity_view_display.node.oe_publication.full',
     'core.entity_view_display.node.oe_publication.teaser',
   ];
+  $storage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
   foreach ($view_display_configs as $config) {
     $display_values = $file_storage->read($config);
-    $storage = \Drupal::entityTypeManager()->getStorage('entity_view_display');
 
     $view_display = EntityViewDisplay::load($display_values['id']);
     if ($view_display) {

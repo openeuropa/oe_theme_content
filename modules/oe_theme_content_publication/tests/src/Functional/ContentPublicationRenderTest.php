@@ -212,6 +212,19 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
 
     // Assert Last update date field.
     $node->set('oe_publication_last_updated', '2020-06-17')->save();
+
+    // Assert Author field label.
+    $author2 = $this->getStorage('oe_author')->create([
+      'type' => 'oe_corporate_body',
+      'oe_skos_reference' => [
+        'http://publications.europa.eu/resource/authority/corporate-body/COMMU',
+      ],
+    ]);
+    $author2->save();
+
+    // Assert Last update date field.
+    $node->set('oe_authors', [$author, $author2])->save();
+
     $this->drupalGet($node->toUrl());
 
     $details_expected_values = [
@@ -223,8 +236,8 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
           'label' => 'Publication date',
           'body' => '15 April 2020 (Last updated on: 17 June 2020)',
         ], [
-          'label' => 'Author',
-          'body' => 'Associated African States and Madagascar',
+          'label' => 'Authors',
+          'body' => 'Associated African States and Madagascar | Directorate-General for Communication',
         ],
       ],
     ];
@@ -443,7 +456,7 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
     $content = $this->assertSession()->elementExists('css', '.ecl-row.ecl-u-mt-l .ecl-col-l-9');
     $expected_values = [
       'title' => 'Test Publication node',
-      'meta' => "Abstract, Legislative acts | 15 April 2020\n | Associated African States and Madagascar",
+      'meta' => "Abstract, Legislative acts | 15 April 2020\n | Associated African States and Madagascar, Directorate-General for Communication",
       'description' => 'Test teaser text.',
     ];
     $assert->assertPattern($expected_values, $content->getOuterHtml());
@@ -464,8 +477,8 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
         'body' => '15 April 2020 (Last updated on: 17 June 2020)',
       ],
       [
-        'label' => 'Author',
-        'body' => 'Associated African States and Madagascar',
+        'label' => 'Authors',
+        'body' => 'Associated African States and Madagascar | Directorate-General for Communication',
       ],
       [
         'label' => 'Related departments',
@@ -523,7 +536,7 @@ class ContentPublicationRenderTest extends ContentRenderTestBase {
       'label' => 'Part of collections',
       'body' => 'Test Publication collection node 1 | ES Test Publication collection node 2',
     ];
-    $details_expected_values['items'][3]['body'] = 'Estados africanos y malgache asociados';
+    $details_expected_values['items'][3]['body'] = 'Estados africanos y malgache asociados | Dirección General de Comunicación';
     $details_expected_values['items'][4]['body'] = 'Comisión de Control de las Comunidades Europeas | Estados africanos y malgache asociados';
     $details_expected_values['items'][5]['body'] = 'Reino Unido, Francia';
     $field_list_assert->assertPattern($details_expected_values, $content_items[0]->getHtml());
